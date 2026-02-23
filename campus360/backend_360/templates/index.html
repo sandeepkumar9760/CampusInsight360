@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Resource & Parameter Estimation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-teal: #0d9488;
+            --light-gray: #f3f4f6;
+            --border-gray: #e5e7eb;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: var(--white);
+            box-shadow: var(--shadow-lg);
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid var(--border-gray);
+            margin-bottom: 20px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), transparent);
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+            padding-left: 23px;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP NAVBAR */
+        .navbar {
+            background: var(--white);
+            padding: 20px 40px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* CONTENT AREA */
+        .content {
+            padding: 40px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* DASHBOARD CARDS */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .card.teal {
+            border-top-color: var(--secondary-teal);
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 10px 0;
+        }
+
+        .card.teal .card-value {
+            color: var(--secondary-teal);
+        }
+
+        .card-label {
+            font-size: 14px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* CHARTS SECTION */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .chart-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+                transition: width 0.3s ease;
+            }
+
+            .sidebar.active {
+                width: 260px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .card-value {
+                font-size: 24px;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-text">CRPES</div>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="blocks.html">🏢 Campus Blocks</a></li>
+                <li><a href="classrooms.html">🎓 Classrooms</a></li>
+                <li><a href="courses.html">📚 Courses</a></li>
+                <li><a href="faculty.html">👨‍🏫 Faculty</a></li>
+                <li><a href="students.html">👥 Students</a></li>
+                <li><a href="analytics.html">📈 Analytics</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP NAVBAR -->
+            <nav class="navbar">
+                <h1 class="navbar-title">Dashboard</h1>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <div class="navbar-user">
+                    <div class="user-avatar">A</div>
+                </div>
+            </nav>
+
+            <!-- CONTENT -->
+            <div class="content">
+                <!-- Summary Cards -->
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-label">Total Blocks</div>
+                        <div class="card-value">12</div>
+                    </div>
+                    <div class="card teal">
+                        <div class="card-label">Total Classrooms</div>
+                        <div class="card-value">48</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Total Students</div>
+                        <div class="card-value">3,245</div>
+                    </div>
+                    <div class="card teal">
+                        <div class="card-label">Total Faculty</div>
+                        <div class="card-value">156</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Total Courses</div>
+                        <div class="card-value">320</div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <div class="chart-title">Classroom Capacity Utilization</div>
+                        <canvas id="capacityChart" width="400" height="250"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-title">Faculty Workload Distribution</div>
+                        <canvas id="workloadChart" width="400" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data
+        const classroomData = {
+            labels: ['Block A', 'Block B', 'Block C', 'Block D', 'Block E'],
+            utilization: [85, 72, 90, 65, 78]
+        };
+
+        const facultyData = {
+            labels: ['Dr. Smith', 'Prof. Johnson', 'Dr. Williams', 'Prof. Brown', 'Dr. Jones'],
+            workload: [95, 80, 75, 88, 70]
+        };
+
+        // Canvas Charts - Capacity Utilization
+        function drawCapacityChart() {
+            const canvas = document.getElementById('capacityChart');
+            const ctx = canvas.getContext('2d');
+            const barWidth = canvas.width / classroomData.labels.length;
+            const maxHeight = 200;
+
+            // Background
+            ctx.fillStyle = '#f3f4f6';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Y-axis line
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.beginPath();
+            ctx.moveTo(40, 20);
+            ctx.lineTo(40, 220);
+            ctx.stroke();
+
+            // X-axis line
+            ctx.beginPath();
+            ctx.moveTo(40, 220);
+            ctx.lineTo(canvas.width - 10, 220);
+            ctx.stroke();
+
+            // Y-axis labels
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 100; i += 20) {
+                const y = 220 - (i / 100) * maxHeight;
+                ctx.fillText(i + '%', 35, y + 4);
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.beginPath();
+                ctx.moveTo(35, y);
+                ctx.lineTo(canvas.width - 10, y);
+                ctx.stroke();
+            }
+
+            // Draw bars
+            classroomData.utilization.forEach((value, index) => {
+                const x = 50 + (index * barWidth) + barWidth / 4;
+                const height = (value / 100) * maxHeight;
+                const y = 220 - height;
+
+                // Bar
+                ctx.fillStyle = index % 2 === 0 ? '#2563eb' : '#0d9488';
+                ctx.fillRect(x, y, barWidth / 2, height);
+
+                // Label
+                ctx.fillStyle = '#1f2937';
+                ctx.textAlign = 'center';
+                ctx.font = '12px sans-serif';
+                ctx.fillText(classroomData.labels[index], x + barWidth / 4, 240);
+                ctx.fillText(value + '%', x + barWidth / 4, y - 5);
+            });
+        }
+
+        // Canvas Charts - Faculty Workload
+        function drawWorkloadChart() {
+            const canvas = document.getElementById('workloadChart');
+            const ctx = canvas.getContext('2d');
+            const barWidth = canvas.width / facultyData.labels.length;
+            const maxHeight = 200;
+
+            // Background
+            ctx.fillStyle = '#f3f4f6';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Y-axis line
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.beginPath();
+            ctx.moveTo(40, 20);
+            ctx.lineTo(40, 220);
+            ctx.stroke();
+
+            // X-axis line
+            ctx.beginPath();
+            ctx.moveTo(40, 220);
+            ctx.lineTo(canvas.width - 10, 220);
+            ctx.stroke();
+
+            // Y-axis labels
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 100; i += 20) {
+                const y = 220 - (i / 100) * maxHeight;
+                ctx.fillText(i + '%', 35, y + 4);
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.beginPath();
+                ctx.moveTo(35, y);
+                ctx.lineTo(canvas.width - 10, y);
+                ctx.stroke();
+            }
+
+            // Draw bars
+            facultyData.workload.forEach((value, index) => {
+                const x = 50 + (index * barWidth) + barWidth / 4;
+                const height = (value / 100) * maxHeight;
+                const y = 220 - height;
+
+                // Bar
+                ctx.fillStyle = index % 2 === 0 ? '#2563eb' : '#0d9488';
+                ctx.fillRect(x, y, barWidth / 2, height);
+
+                // Label
+                ctx.fillStyle = '#1f2937';
+                ctx.textAlign = 'center';
+                ctx.font = '11px sans-serif';
+                ctx.fillText(facultyData.labels[index].substring(0, 10), x + barWidth / 4, 240);
+                ctx.fillText(value + '%', x + barWidth / 4, y - 5);
+            });
+        }
+
+        // Menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Draw charts on load
+        drawCapacityChart();
+        drawWorkloadChart();
+
+        // Redraw on resize
+        window.addEventListener('resize', function() {
+            drawCapacityChart();
+            drawWorkloadChart();
+        });
+    </script>
+</body>
+</html>
