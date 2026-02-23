@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students - CRPES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-teal: #0d9488;
+            --light-gray: #f3f4f6;
+            --border-gray: #e5e7eb;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: var(--white);
+            box-shadow: var(--shadow-lg);
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            left: 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid var(--border-gray);
+            margin-bottom: 20px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), transparent);
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+            padding-left: 23px;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP NAVBAR */
+        .navbar {
+            background: var(--white);
+            padding: 20px 40px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* CONTENT AREA */
+        .content {
+            padding: 40px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* FORMS */
+        .form-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .form-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        input, select {
+            padding: 10px 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-gray);
+        }
+
+        /* TABLE */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .table-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--light-gray);
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 14px;
+            border-bottom: 2px solid var(--border-gray);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-gray);
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: var(--light-gray);
+            transition: background 0.2s ease;
+        }
+
+        .btn-delete {
+            background: var(--error);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            max-width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .modal-message {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .btn-modal {
+            padding: 10px 20px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal:hover {
+            background: #1d4ed8;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+                transition: width 0.3s ease;
+            }
+
+            .sidebar.active {
+                width: 260px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar-title {
+                font-size: 18px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container, .table-container {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-text">CRPES</div>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html">📊 Dashboard</a></li>
+                <li><a href="blocks.html">🏢 Campus Blocks</a></li>
+                <li><a href="classrooms.html">🎓 Classrooms</a></li>
+                <li><a href="courses.html">📚 Courses</a></li>
+                <li><a href="faculty.html">👨‍🏫 Faculty</a></li>
+                <li><a href="students.html" class="active">👥 Students</a></li>
+                <li><a href="analytics.html">📈 Analytics</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- TOP NAVBAR -->
+            <nav class="navbar">
+                <h1 class="navbar-title">Students</h1>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <div class="navbar-user">
+                    <div class="user-avatar">A</div>
+                </div>
+            </nav>
+
+            <!-- CONTENT -->
+            <div class="content">
+                <!-- ADD STUDENT FORM -->
+                <div class="form-container">
+                    <div class="form-title">Add New Student</div>
+                    <form id="studentForm" class="form-grid">
+                        <div class="form-group">
+                            <label for="studentName">Student Name</label>
+                            <input type="text" id="studentName" name="student_name" placeholder="e.g., John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regNumber">Registration Number</label>
+                            <input type="text" id="regNumber" name="registration_number" placeholder="e.g., REG-2024-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseSelect">Course Enrolled</label>
+                            <select id="courseSelect" name="course" required>
+                                <option value="">Select Course</option>
+                                <option value="Data Science 101">Data Science 101</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Database Design">Database Design</option>
+                                <option value="Physics I">Physics I</option>
+                                <option value="Calculus II">Calculus II</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="classroomSelect">Assigned Classroom</label>
+                            <select id="classroomSelect" name="classroom" required>
+                                <option value="">Select Classroom</option>
+                                <option value="Lab 101">Lab 101</option>
+                                <option value="Lecture Hall A">Lecture Hall A</option>
+                                <option value="Computer Lab">Computer Lab</option>
+                                <option value="Physics Lab">Physics Lab</option>
+                                <option value="Seminar Room 1">Seminar Room 1</option>
+                                <option value="Lecture Hall B">Lecture Hall B</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="addStudent()">Add Student</button>
+                        <button class="btn-secondary" onclick="resetStudentForm()">Reset</button>
+                    </div>
+                </div>
+
+                <!-- STUDENTS TABLE -->
+                <div class="table-container">
+                    <div class="table-title">Student List</div>
+                    <table id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Registration #</th>
+                                <th>Course Enrolled</th>
+                                <th>Classroom</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-icon">✓</div>
+            <div class="modal-title">Success!</div>
+            <div class="modal-message">Student added successfully</div>
+            <button class="btn-modal" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data
+        let students = [
+            { name: 'Alice Johnson', reg: 'REG-2024-001', course: 'Data Science 101', classroom: 'Lab 101' },
+            { name: 'Bob Smith', reg: 'REG-2024-002', course: 'Web Development', classroom: 'Lecture Hall A' },
+            { name: 'Carol White', reg: 'REG-2024-003', course: 'Database Design', classroom: 'Computer Lab' },
+            { name: 'David Brown', reg: 'REG-2024-004', course: 'Physics I', classroom: 'Physics Lab' },
+            { name: 'Emma Davis', reg: 'REG-2024-005', course: 'Calculus II', classroom: 'Seminar Room 1' },
+            { name: 'Frank Miller', reg: 'REG-2024-006', course: 'Data Science 101', classroom: 'Lab 101' },
+            { name: 'Grace Taylor', reg: 'REG-2024-007', course: 'Web Development', classroom: 'Lecture Hall A' }
+        ];
+
+        // Load table on page load
+        function loadStudentsTable() {
+            const tbody = document.querySelector('#studentsTable tbody');
+            tbody.innerHTML = '';
+
+            students.forEach((student, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.reg}</td>
+                    <td>${student.course}</td>
+                    <td>${student.classroom}</td>
+                    <td><button class="btn-delete" onclick="deleteStudent(${index})">Delete</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Add new student
+        function addStudent() {
+            const form = document.getElementById('studentForm');
+            if (!form.checkValidity()) {
+                alert('Please fill all fields correctly');
+                return;
+            }
+
+            const name = document.getElementById('studentName').value;
+            const reg = document.getElementById('regNumber').value;
+            const course = document.getElementById('courseSelect').value;
+            const classroom = document.getElementById('classroomSelect').value;
+
+            students.push({
+                name: name,
+                reg: reg,
+                course: course,
+                classroom: classroom
+            });
+
+            loadStudentsTable();
+            resetStudentForm();
+            showModal();
+        }
+
+        // Delete student
+        function deleteStudent(index) {
+            if (confirm('Are you sure you want to delete this student?')) {
+                students.splice(index, 1);
+                loadStudentsTable();
+            }
+        }
+
+        // Reset form
+        function resetStudentForm() {
+            document.getElementById('studentForm').reset();
+        }
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // Menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Initial load
+        loadStudentsTable();
+    </script>
+</body>
+</html>
