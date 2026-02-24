@@ -509,7 +509,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                        </tbody>
+{% for course in courses %}
+<tr>
+    <td>{{ course.name }}</td>
+    <td>{{ course.course_code }}</td>
+    <td>{{ course.faculty.name }}</td>
+    <td>{{ course.classroom.name }}</td>
+    <td>{{ course.credit_hours }}</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5">No Courses Available</td>
+</tr>
+{% endfor %}
+</tbody>
                     </table>
                 </div>
             </div>
