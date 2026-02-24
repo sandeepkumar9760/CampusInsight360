@@ -4,6 +4,7 @@ from django.db.models import Sum, Count
 from django.contrib import messages
 from .models import CampusBlock, Classroom, Course, Faculty, Student
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 # -------------------------------------------------
 # LOGIN VIEW
@@ -209,3 +210,7 @@ def analytics_view(request):
     }
 
     return render(request, "analytics.html", context)
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
