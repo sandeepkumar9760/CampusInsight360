@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -367,13 +368,13 @@
                 <div class="logo-text">CRPES</div>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="index.html">📊 Dashboard</a></li>
-                <li><a href="blocks.html">🏢 Campus Blocks</a></li>
-                <li><a href="classrooms.html">🎓 Classrooms</a></li>
-                <li><a href="courses.html">📚 Courses</a></li>
-                <li><a href="faculty.html">👨‍🏫 Faculty</a></li>
-                <li><a href="students.html">👥 Students</a></li>
-                <li><a href="analytics.html" class="active">📈 Analytics</a></li>
+                <li><a href="{% url 'dashboard' %}">📊 Dashboard</a></li>
+                <li><a href="{% url 'blocks_views' %}">🏢 Campus Blocks</a></li>
+                <li><a href="{% url 'classrooms_views' %}">🎓 Classrooms</a></li>
+                <li><a href="{% url 'courses_views' %}">📚 Courses</a></li>
+                <li><a href="{% url faculty_views' %}">👨‍🏫 Faculty</a></li>
+                <li><a href="{% url 'students_views' %}"👥 Students</a></li>
+                <li><a href="{% url 'analytics_view' %}" class="active">📈 Analytics</a></li>
             </ul>
         </aside>
 

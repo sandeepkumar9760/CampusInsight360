@@ -76,7 +76,7 @@ WSGI_APPLICATION = "campus360.wsgi.application"
 DATABASES = {
     "default": {
         'ENGINE': "django.db.backends.postgresql",
-        'NAME': 'campus360 DBS',
+        'NAME': 'campus_dbs',
         'USER':'postgres',
         'PASSWORD':'123',
         'HOST':'localhost',
