@@ -240,6 +240,11 @@
     <div class="login-container">
         <div class="login-header">
             <h1>CRPE System</h1>
+            {% if error %}
+<div class="error-message show">
+    {{ error }}
+</div>
+{% endif %}
             <p>Campus Resource & Parameter Estimation</p>
         </div>
         <form class="login-form" method="POST">
