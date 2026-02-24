@@ -143,4 +143,51 @@ def faculty_view(request):
     }
 
     return render(request, "faculty.html", context)
+# -------------------------------------------------------
+# STUDENTS VIEW
+# -------------------------------------------------------
+def students_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        reg_no = request.POST.get("registration_number")
+        course_id = request.POST.get("course")
+        classroom_id = request.POST.get("classroom")
 
+        course = Course.objects.get(id=course_id)
+        classroom = Classroom.objects.get(id=classroom_id)
+
+        Student.objects.create(
+            name=name,
+            registration_number=reg_no,
+            course=course,
+            classroom=classroom
+        )
+
+        return redirect("students")
+
+    students = Student.objects.select_related("course", "classroom").all()
+    courses = Course.objects.all()
+    classrooms = Classroom.objects.all()
+
+    context = {
+        "students": students,
+        "courses": courses,
+        "classrooms": classrooms,
+    }
+
+    return render(request, "students.html", context)
+# --------------------------------------------------------
+# ANALYTICS VIEW 
+# --------------------------------------------------------
+def analytics_view(request):
+    blocks = CampusBlock.objects.all()
+    classrooms = Classroom.objects.all()
+    faculty_members = Faculty.objects.all()
+
+    context = {
+        "blocks": blocks,
+        "classrooms": classrooms,
+        "faculty_members": faculty_members,
+    }
+
+    return render(request, "analytics.html", context)
