@@ -1,4 +1,4 @@
-
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum, Count
 from django.contrib import messages
@@ -9,8 +9,19 @@ from django.contrib.auth.decorators import login_required
 # LOGIN VIEW
 # -------------------------------------------------
 def login_view(request):
-    return render(request, "login.html")
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("dashboard")
+        else:
+            return render(request, "login.html", {"error": "Invalid credentials"})
+
+    return render(request, "login.html")
 # --------------------------------------------------
 # DASHBOARD VIEW
 # --------------------------------------------------
