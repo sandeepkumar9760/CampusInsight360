@@ -30,3 +30,117 @@ def dashboard(request):
     }
 
     return render(request, "index.html", context)
+# ----------------------------------------------------------
+# BLOCK VIEW
+# ----------------------------------------------------------
+def blocks_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        total_classrooms = request.POST.get("total_classrooms")
+        max_capacity = request.POST.get("max_capacity")
+
+        CampusBlock.objects.create(
+            name=name,
+            total_classrooms=total_classrooms,
+            max_capacity=max_capacity
+        )
+
+        return redirect("blocks")
+
+    blocks = CampusBlock.objects.all()
+
+    context = {
+        "blocks": blocks
+    }
+
+    return render(request, "blocks.html", context)
+
+# ------------------------------------------------------
+# CLASSROOM VIEW
+# ------------------------------------------------------
+def classrooms_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        block_id = request.POST.get("block")
+        seating_capacity = request.POST.get("seating_capacity")
+
+        block = CampusBlock.objects.get(id=block_id)
+
+        Classroom.objects.create(
+            name=name,
+            block=block,
+            seating_capacity=seating_capacity
+        )
+
+        return redirect("classrooms")
+
+    classrooms = Classroom.objects.select_related("block").all()
+    blocks = CampusBlock.objects.all()
+
+    context = {
+        "classrooms": classrooms,
+        "blocks": blocks,
+    }
+
+    return render(request, "classrooms.html", context)
+# ----------------------------------------------------------------
+# COURSES VIEW 
+# ----------------------------------------------------------------
+def courses_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        code = request.POST.get("course_code")
+        credit_hours = request.POST.get("credit_hours")
+        faculty_id = request.POST.get("faculty")
+        classroom_id = request.POST.get("classroom")
+
+        faculty = Faculty.objects.get(id=faculty_id)
+        classroom = Classroom.objects.get(id=classroom_id)
+
+        Course.objects.create(
+            name=name,
+            course_code=code,
+            credit_hours=credit_hours,
+            faculty=faculty,
+            classroom=classroom
+        )
+
+        return redirect("courses")
+
+    courses = Course.objects.select_related("faculty", "classroom").all()
+    faculties = Faculty.objects.all()
+    classrooms = Classroom.objects.all()
+
+    context = {
+        "courses": courses,
+        "faculties": faculties,
+        "classrooms": classrooms,
+    }
+
+    return render(request, "courses.html", context)
+
+# ---------------------------------------------------------
+# FACULTY VIEW 
+# ---------------------------------------------------------
+def faculty_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        department = request.POST.get("department")
+        max_teaching_load = request.POST.get("max_teaching_load")
+
+        Faculty.objects.create(
+            name=name,
+            department=department,
+            max_teaching_load=max_teaching_load
+        )
+
+        return redirect("faculty")
+
+    faculty_members = Faculty.objects.all()
+
+    context = {
+        "faculty_members": faculty_members
+    }
+
+    return render(request, "faculty.html", context)
+
