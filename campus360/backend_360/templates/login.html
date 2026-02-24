@@ -242,33 +242,31 @@
             <h1>CRPE System</h1>
             <p>Campus Resource & Parameter Estimation</p>
         </div>
-        <form class="login-form" id="loginForm">
+        <form class="login-form" method="POST">
+            {% csrf_token %}
             <div class="error-message" id="errorMessage"></div>
             <div class="success-message" id="successMessage"></div>
             
             <div class="form-group">
-                <label for="email">Email or Username</label>
-                <input 
-                    type="text" 
-                    id="email" 
-                    name="email" 
-                    placeholder="Enter your email or username" 
-                    required
-                    autocomplete="username"
-                >
-            </div>
+    <label>Username</label>
+    <input 
+        type="text"
+        name="username"
+        placeholder="Enter your username"
+        required
+    >
+</div>
+
 
             <div class="form-group">
-                <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    placeholder="Enter your password" 
-                    required
-                    autocomplete="current-password"
-                >
-            </div>
+    <label>Password</label>
+    <input 
+        type="password"
+        name="password"
+        placeholder="Enter your password"
+        required
+    >
+</div>
 
             <div class="remember-forgot">
                 <label>
