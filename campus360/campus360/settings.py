@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "backend_360",
 ]
 
 MIDDLEWARE = [
@@ -74,10 +75,17 @@ WSGI_APPLICATION = "campus360.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'ENGINE': "django.db.backends.postgresql",
+        'NAME': 'campus360 DBS',
+        'USER':'postgres',
+        'PASSWORD':'123',
+        'HOST':'localhost',
+        'PORT':'5432',
+        'CONN_MAX_AGE': 0,
+
     }
 }
+
 
 
 # Password validation
