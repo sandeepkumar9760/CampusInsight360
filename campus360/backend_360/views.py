@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum, Count
 from django.contrib import messages
 from .models import CampusBlock, Classroom, Course, Faculty, Student
-
+from django.contrib.auth.decorators import login_required
 
 # -------------------------------------------------
 # LOGIN VIEW
@@ -14,6 +14,7 @@ def login_view(request):
 # --------------------------------------------------
 # DASHBOARD VIEW
 # --------------------------------------------------
+@login_required
 def dashboard(request):
     total_blocks = CampusBlock.objects.count()
     total_classrooms = Classroom.objects.count()
@@ -33,6 +34,7 @@ def dashboard(request):
 # ----------------------------------------------------------
 # BLOCK VIEW
 # ----------------------------------------------------------
+@login_required
 def blocks_view(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -58,6 +60,7 @@ def blocks_view(request):
 # ------------------------------------------------------
 # CLASSROOM VIEW
 # ------------------------------------------------------
+@login_required
 def classrooms_view(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -86,6 +89,7 @@ def classrooms_view(request):
 # ----------------------------------------------------------------
 # COURSES VIEW 
 # ----------------------------------------------------------------
+@login_required
 def courses_view(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -122,6 +126,7 @@ def courses_view(request):
 # ---------------------------------------------------------
 # FACULTY VIEW 
 # ---------------------------------------------------------
+@login_required
 def faculty_view(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -146,6 +151,7 @@ def faculty_view(request):
 # -------------------------------------------------------
 # STUDENTS VIEW
 # -------------------------------------------------------
+@login_required
 def students_view(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -179,6 +185,7 @@ def students_view(request):
 # --------------------------------------------------------
 # ANALYTICS VIEW 
 # --------------------------------------------------------
+@login_required
 def analytics_view(request):
     blocks = CampusBlock.objects.all()
     classrooms = Classroom.objects.all()
