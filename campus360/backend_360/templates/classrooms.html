@@ -469,36 +469,7 @@
 
             <!-- CONTENT -->
             <div class="content">
-                <!-- ADD CLASSROOM FORM -->
-                <div class="form-container">
-                    <div class="form-title">Add New Classroom</div>
-                    <form id="classroomForm" class="form-grid">
-                        <div class="form-group">
-                            <label for="classroomName">Classroom Name</label>
-                            <input type="text" id="classroomName" name="classroom_name" placeholder="e.g., Lab 101" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="blockSelect">Block</label>
-                            <select id="blockSelect" name="block" required>
-                                <option value="">Select Block</option>
-                                <option value="Block A">Block A</option>
-                                <option value="Block B">Block B</option>
-                                <option value="Block C">Block C</option>
-                                <option value="Block D">Block D</option>
-                                <option value="Block E">Block E</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="seatingCapacity">Seating Capacity</label>
-                            <input type="number" id="seatingCapacity" name="seating_capacity" placeholder="e.g., 50" min="1" required>
-                        </div>
-                    </form>
-                    <div class="form-actions">
-                        <button class="btn-primary" onclick="addClassroom()">Add Classroom</button>
-                        <button class="btn-secondary" onclick="resetClassroomForm()">Reset</button>
-                    </div>
-                </div>
-
+                
                 <!-- CLASSROOMS TABLE -->
                 <div class="table-container">
                     <div class="table-title">Classroom List</div>
@@ -513,7 +484,6 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
                             <tbody>
 {% for classroom in classrooms %}
 <tr>
