@@ -430,13 +430,13 @@
                 <div class="logo-text">CRPES</div>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="index.html">📊 Dashboard</a></li>
-                <li><a href="blocks.html">🏢 Campus Blocks</a></li>
-                <li><a href="classrooms.html">🎓 Classrooms</a></li>
-                <li><a href="courses.html">📚 Courses</a></li>
-                <li><a href="faculty.html">👨‍🏫 Faculty</a></li>
-                <li><a href="students.html" class="active">👥 Students</a></li>
-                <li><a href="analytics.html">📈 Analytics</a></li>
+                 <li><a href="{% url 'dashboard' %}">📊 Dashboard</a></li>
+                <li><a href="{% url 'blocks' %}">🏢 Campus Blocks</a></li>
+                <li><a href="{% url 'classrooms' %}">🎓 Classrooms</a></li>
+                <li><a href="{% url 'courses' %}">📚 Courses</a></li>
+                <li><a href="{% url faculty' %}">👨‍🏫 Faculty</a></li>
+                <li><a href="{% url 'students' %}" class="active">👥 Students</a></li>
+                <li><a href="{% url 'analytics' %}">📈 Analytics</a></li>
             </ul>
         </aside>
 
@@ -465,7 +465,6 @@
                                 <th>Registration #</th>
                                 <th>Course Enrolled</th>
                                 <th>Classroom</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -487,101 +486,13 @@
             </div>
         </div>
     </div>
-
-    <!-- SUCCESS MODAL -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-icon">✓</div>
-            <div class="modal-title">Success!</div>
-            <div class="modal-message">Student added successfully</div>
-            <button class="btn-modal" onclick="closeModal()">Close</button>
-        </div>
-    </div>
-
     <script>
-        // Dummy data
-        let students = [
-            { name: 'Alice Johnson', reg: 'REG-2024-001', course: 'Data Science 101', classroom: 'Lab 101' },
-            { name: 'Bob Smith', reg: 'REG-2024-002', course: 'Web Development', classroom: 'Lecture Hall A' },
-            { name: 'Carol White', reg: 'REG-2024-003', course: 'Database Design', classroom: 'Computer Lab' },
-            { name: 'David Brown', reg: 'REG-2024-004', course: 'Physics I', classroom: 'Physics Lab' },
-            { name: 'Emma Davis', reg: 'REG-2024-005', course: 'Calculus II', classroom: 'Seminar Room 1' },
-            { name: 'Frank Miller', reg: 'REG-2024-006', course: 'Data Science 101', classroom: 'Lab 101' },
-            { name: 'Grace Taylor', reg: 'REG-2024-007', course: 'Web Development', classroom: 'Lecture Hall A' }
-        ];
-
-        // Load table on page load
-        function loadStudentsTable() {
-            const tbody = document.querySelector('#studentsTable tbody');
-            tbody.innerHTML = '';
-
-            students.forEach((student, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${student.name}</td>
-                    <td>${student.reg}</td>
-                    <td>${student.course}</td>
-                    <td>${student.classroom}</td>
-                    <td><button class="btn-delete" onclick="deleteStudent(${index})">Delete</button></td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        // Add new student
-        function addStudent() {
-            const form = document.getElementById('studentForm');
-            if (!form.checkValidity()) {
-                alert('Please fill all fields correctly');
-                return;
-            }
-
-            const name = document.getElementById('studentName').value;
-            const reg = document.getElementById('regNumber').value;
-            const course = document.getElementById('courseSelect').value;
-            const classroom = document.getElementById('classroomSelect').value;
-
-            students.push({
-                name: name,
-                reg: reg,
-                course: course,
-                classroom: classroom
-            });
-
-            loadStudentsTable();
-            resetStudentForm();
-            showModal();
-        }
-
-        // Delete student
-        function deleteStudent(index) {
-            if (confirm('Are you sure you want to delete this student?')) {
-                students.splice(index, 1);
-                loadStudentsTable();
-            }
-        }
-
-        // Reset form
-        function resetStudentForm() {
-            document.getElementById('studentForm').reset();
-        }
-
-        // Modal functions
-        function showModal() {
-            document.getElementById('modal').classList.add('show');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('show');
-        }
-
         // Menu toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
         });
 
-        // Initial load
-        loadStudentsTable();
+
     </script>
 </body>
 </html>

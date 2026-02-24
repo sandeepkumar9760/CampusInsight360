@@ -430,13 +430,13 @@
                 <div class="logo-text">CRPES</div>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="index.html">📊 Dashboard</a></li>
-                <li><a href="blocks.html">🏢 Campus Blocks</a></li>
-                <li><a href="classrooms.html">🎓 Classrooms</a></li>
-                <li><a href="courses.html" class="active">📚 Courses</a></li>
-                <li><a href="faculty.html">👨‍🏫 Faculty</a></li>
-                <li><a href="students.html">👥 Students</a></li>
-                <li><a href="analytics.html">📈 Analytics</a></li>
+                 <li><a href="{% url 'dashboard' %}">📊 Dashboard</a></li>
+                <li><a href="{% url 'blocks' %}">🏢 Campus Blocks</a></li>
+                <li><a href="{% url 'classrooms' %}">🎓 Classrooms</a></li>
+                <li><a href="{% url 'courses' %}"class="active">📚 Courses</a></li>
+                <li><a href="{% url faculty' %}">👨‍🏫 Faculty</a></li>
+                <li><a href="{% url 'students' %}">👥 Students</a></li>
+                <li><a href="{% url 'analytics' %}" >📈 Analytics</a></li>
             </ul>
         </aside>
 
