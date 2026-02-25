@@ -199,14 +199,21 @@ def students_view(request):
 # --------------------------------------------------------
 @login_required
 def analytics_view(request):
+
     blocks = CampusBlock.objects.all()
     classrooms = Classroom.objects.all()
     faculty_members = Faculty.objects.all()
+
+    # Student distribution per course
+    course_distribution = Course.objects.annotate(
+        student_count=Count("students")
+    )
 
     context = {
         "blocks": blocks,
         "classrooms": classrooms,
         "faculty_members": faculty_members,
+        "course_distribution": course_distribution,
     }
 
     return render(request, "analytics.html", context)

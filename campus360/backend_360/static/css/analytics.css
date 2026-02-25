@@ -1,0 +1,81 @@
+/* ============================= */
+/* ANALYTICS DASHBOARD STYLING  */
+/* ============================= */
+
+.content {
+    padding: 40px;
+    background: #f5f7fb;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+/* Card Wrapper */
+.analytics-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Table Styling */
+.analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.analytics-table thead {
+    background: #f3f4f6;
+}
+
+.analytics-table th {
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+}
+
+.analytics-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #4b5563;
+}
+
+.analytics-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Utilization Badges */
+.badge {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.badge-low {
+    background: #10b981;
+}
+
+.badge-medium {
+    background: #f59e0b;
+}
+
+.badge-high {
+    background: #ef4444;
+}

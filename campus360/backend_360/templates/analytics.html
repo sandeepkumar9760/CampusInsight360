@@ -1,9 +1,12 @@
+{% extends "base.html" %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
     <title>Analytics - CRPES</title>
     <style>
         * {
@@ -361,34 +364,79 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo">
-                <div class="logo-text">CRPES</div>
-            </div>
-            <ul class="sidebar-menu">
-                 <li><a href="{% url 'dashboard' %}">📊 Dashboard</a></li>
-                <li><a href="{% url 'blocks' %}">🏢 Campus Blocks</a></li>
-                <li><a href="{% url 'classrooms' %}">🎓 Classrooms</a></li>
-                <li><a href="{% url 'courses' %}">📚 Courses</a></li>
-                <li><a href="{% url 'faculty' %}">👨‍🏫 Faculty</a></li>
-                <li><a href="{% url 'students' %}">👥 Students</a></li>
-                <li><a href="{% url 'analytics' %}" class="active">📈 Analytics</a></li>
-            </ul>
-        </aside>
+ 
 
-        <!-- MAIN CONTENT -->
-        <div class="main-content">
-            <!-- TOP NAVBAR -->
-            <nav class="navbar">
-                <h1 class="navbar-title">Analytics & Insights</h1>
-                <button class="menu-toggle" id="menuToggle">☰</button>
-                <div class="navbar-user">
-                    <div class="user-avatar">A</div>
-                </div>
-            </nav>
+{% extends "base.html" %}
+{% load static %}
 
+{% block content %}
+
+<div class="analytics-card">
+    <div class="section-title">Block Utilization</div>
+    <table class="analytics-table">
+        <thead>
+            <tr>
+                <th>Block</th>
+                <th>Utilization</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for block in blocks %}
+            <tr>
+                <td>{{ block.name }}</td>
+                <td>
+                    {% if block.utilization_percentage > 80 %}
+                        <span class="badge badge-high">
+                    {% elif block.utilization_percentage > 50 %}
+                        <span class="badge badge-medium">
+                    {% else %}
+                        <span class="badge badge-low">
+                    {% endif %}
+                        {{ block.utilization_percentage }}%
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="analytics-card">
+    <div class="section-title">Classroom Utilization</div>
+    <table class="analytics-table">
+        <thead>
+            <tr>
+                <th>Classroom</th>
+                <th>Capacity</th>
+                <th>Students</th>
+                <th>Utilization</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classroom in classrooms %}
+            <tr>
+                <td>{{ classroom.name }}</td>
+                <td>{{ classroom.seating_capacity }}</td>
+                <td>{{ classroom.students.count }}</td>
+                <td>
+                    {% if classroom.utilization_percentage > 80 %}
+                        <span class="badge badge-high">
+                    {% elif classroom.utilization_percentage > 50 %}
+                        <span class="badge badge-medium">
+                    {% else %}
+                        <span class="badge badge-low">
+                    {% endif %}
+                        {{ classroom.utilization_percentage }}%
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
     <script>
         // Menu toggle
         document.getElementById('menuToggle').addEventListener('click', function() {
