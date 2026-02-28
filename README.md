@@ -371,7 +371,7 @@ This project is open-source and available for educational and commercial use.
 
 **Sandeep Kumar**
 - GitHub: [@sandeepkumar9760](https://github.com/sandeepkumar9760)
-- LinkedIn: [Connect with me](https://www.linkedin.com/in/sandeepkumar9760)
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/sandeep_kumar_ds)
 
 ## 🙏 Acknowledgments
 
@@ -383,7 +383,7 @@ This project is open-source and available for educational and commercial use.
 
 For questions, issues, or suggestions:
 - Open an issue on GitHub
-- Contact via email: [your-email@example.com]
+- Contact via email: [sandeepkumar270724@gmail.com]
 
 ---
 
